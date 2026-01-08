@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace ProjectMMVC.Models
 {
-    public class Student
+    public class StudentsClass
     {
         [Required]
         [Key]
@@ -26,11 +26,8 @@ namespace ProjectMMVC.Models
         [Phone]
         [Display(Name = "Phone Number")]
         public string Phone { get; set; }
-        [Required]
-        [PasswordPropertyText]
-        public string Password { get; set; }
-        [Required]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
-        public string ConfirmPassword { get; set; }
+        
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

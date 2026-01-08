@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ProjectMMVC.Data;
+//using ProjectMMVC.Data;
 using ProjectMMVC.Models;
 
 namespace ProjectMMVC.Controllers
 {
-    public class StudentsController : Controller
+    public class StudentsClassController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StudentsController(ApplicationDbContext context)
+        public StudentsClassController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace ProjectMMVC.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.students.ToListAsync());
+            return View(await _context.studentsClasses.ToListAsync());
         }
 
         // GET: Students/Details/5
@@ -33,7 +33,7 @@ namespace ProjectMMVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await _context.studentsClasses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -54,7 +54,7 @@ namespace ProjectMMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] StudentsClass student)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace ProjectMMVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students.FindAsync(id);
+            var student = await _context.studentsClasses.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace ProjectMMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] StudentsClass student)
         {
             if (id != student.Id)
             {
@@ -124,7 +124,7 @@ namespace ProjectMMVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.students
+            var student = await _context.studentsClasses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
@@ -139,10 +139,10 @@ namespace ProjectMMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.students.FindAsync(id);
+            var student = await _context.studentsClasses.FindAsync(id);
             if (student != null)
             {
-                _context.students.Remove(student);
+                _context.studentsClasses.Remove(student);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace ProjectMMVC.Controllers
 
         private bool StudentExists(int id)
         {
-            return _context.students.Any(e => e.Id == id);
+            return _context.studentsClasses.Any(e => e.Id == id);
         }
     }
 }

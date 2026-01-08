@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ProjectMMVC/ProjectMMVC/Migrations/20260107072051_initj.cs

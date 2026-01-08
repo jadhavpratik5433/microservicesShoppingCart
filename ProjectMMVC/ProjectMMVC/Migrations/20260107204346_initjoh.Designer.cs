@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectMMVC.Models;
 
@@ -11,9 +12,11 @@ using ProjectMMVC.Models;
 namespace ProjectMMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260107204346_initjoh")]
+    partial class initjoh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,7 +223,7 @@ namespace ProjectMMVC.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectMMVC.Models.StudentsClass", b =>
+            modelBuilder.Entity("ProjectMMVC.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +263,7 @@ namespace ProjectMMVC.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("studentsClasses");
+                    b.ToTable("students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -314,11 +317,11 @@ namespace ProjectMMVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectMMVC.Models.StudentsClass", b =>
+            modelBuilder.Entity("ProjectMMVC.Models.Student", b =>
                 {
                     b.HasOne("ProjectMMVC.Models.ApplicationUser", "User")
                         .WithOne("Student")
-                        .HasForeignKey("ProjectMMVC.Models.StudentsClass", "UserId")
+                        .HasForeignKey("ProjectMMVC.Models.Student", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

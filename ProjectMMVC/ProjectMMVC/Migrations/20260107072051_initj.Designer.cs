@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjectMMVC.Data;
+//using ProjectMMVC.Data;
 
 #nullable disable
 
 namespace ProjectMMVC.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+   // [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260107072051_initj")]
     partial class initj
     {
