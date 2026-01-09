@@ -1,44 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using ProjectMMVC.Data;
 using ProjectMMVC.Models;
+using ProjectMMVC.Services;
+//using ProjectMMVC.Services.Interfaces;
 
 namespace ProjectMMVC.Controllers
 {
     public class StudentsClassController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IStudent _studentsService;
 
-        public StudentsClassController(ApplicationDbContext context)
+        // ✅ DI via Interface
+        public StudentsClassController(IStudent studentsService)
         {
-            _context = context;
+            _studentsService = studentsService;
         }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.studentsClasses.ToListAsync());
+            var students = await _studentsService.GetAllAsync();
+            return View(students);
         }
 
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var student = await _context.studentsClasses
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _studentsService.GetByIdAsync(id.Value);
+
             if (student == null)
-            {
                 return NotFound();
-            }
 
             return View(student);
         }
@@ -50,16 +44,13 @@ namespace ProjectMMVC.Controllers
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] StudentsClass student)
+        public async Task<IActionResult> Create(StudentsClass student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                await _studentsService.CreateAsync(student);
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
@@ -69,47 +60,36 @@ namespace ProjectMMVC.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var student = await _context.studentsClasses.FindAsync(id);
+            var student = await _studentsService.GetByIdAsync(id.Value);
+
             if (student == null)
-            {
                 return NotFound();
-            }
+
             return View(student);
         }
 
         // POST: Students/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Email,Class,Address,Phone,Password,ConfirmPassword")] StudentsClass student)
+        public async Task<IActionResult> Edit(int id, StudentsClass student)
         {
             if (id != student.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    await _studentsService.UpdateAsync(student);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.Id))
-                    {
+                    if (!_studentsService.Exists(student.Id))
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -120,16 +100,12 @@ namespace ProjectMMVC.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var student = await _context.studentsClasses
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await _studentsService.GetByIdAsync(id.Value);
+
             if (student == null)
-            {
                 return NotFound();
-            }
 
             return View(student);
         }
@@ -139,19 +115,8 @@ namespace ProjectMMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.studentsClasses.FindAsync(id);
-            if (student != null)
-            {
-                _context.studentsClasses.Remove(student);
-            }
-
-            await _context.SaveChangesAsync();
+            await _studentsService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool StudentExists(int id)
-        {
-            return _context.studentsClasses.Any(e => e.Id == id);
         }
     }
 }

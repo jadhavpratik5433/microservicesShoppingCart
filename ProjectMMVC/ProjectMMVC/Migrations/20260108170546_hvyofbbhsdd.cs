@@ -5,7 +5,7 @@
 namespace ProjectMMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class initjohdsxf : Migration
+    public partial class hvyofbbhsdd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

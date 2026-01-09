@@ -12,8 +12,8 @@ using ProjectMMVC.Models;
 namespace ProjectMMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260107204346_initjoh")]
-    partial class initjoh
+    [Migration("20260108170546_hvyofbbhsdd")]
+    partial class hvyofbbhsdd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,10 +105,12 @@ namespace ProjectMMVC.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -145,10 +147,12 @@ namespace ProjectMMVC.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -223,7 +227,7 @@ namespace ProjectMMVC.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectMMVC.Models.Student", b =>
+            modelBuilder.Entity("ProjectMMVC.Models.StudentsClass", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -263,7 +267,7 @@ namespace ProjectMMVC.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("students");
+                    b.ToTable("studentsClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -317,11 +321,11 @@ namespace ProjectMMVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectMMVC.Models.Student", b =>
+            modelBuilder.Entity("ProjectMMVC.Models.StudentsClass", b =>
                 {
                     b.HasOne("ProjectMMVC.Models.ApplicationUser", "User")
                         .WithOne("Student")
-                        .HasForeignKey("ProjectMMVC.Models.Student", "UserId")
+                        .HasForeignKey("ProjectMMVC.Models.StudentsClass", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
