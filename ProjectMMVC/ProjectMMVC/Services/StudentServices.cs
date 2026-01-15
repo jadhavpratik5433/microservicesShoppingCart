@@ -1,43 +1,33 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjectMMVC.Data;
 using ProjectMMVC.Models;
 
 namespace ProjectMMVC.Services
 {
-    public class StudentServices :IStudent
+    public class StudentServices : IStudent
     {
         private readonly ApplicationDbContext _context;
+
         public StudentServices(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-        public async Task<StudentsClass> GetByUserIdAsync(string userId)
+        public async Task<List<StudentsClass>> GetAllAsync()
         {
-            return await _context.studentsClasses.FirstOrDefaultAsync(x => x.UserId == userId);
+            return await _context.studentsClasses.ToListAsync();
         }
+
+        public async Task<StudentsClass?> GetByIdAsync(int id)
+        {
+            return await _context.studentsClasses.FindAsync(id);
+        }
+
         public async Task CreateAsync(StudentsClass student)
         {
             _context.studentsClasses.Add(student);
-            await  _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
-
-
-
-
-
-
-        public async Task<List<StudentsClass>> GetAllAsync()
-       => await _context.studentsClasses.ToListAsync();
-
-        public async Task<StudentsClass?> GetByIdAsync(int id)
-            => await _context.studentsClasses.FirstOrDefaultAsync(x => x.Id == id);
-
-        //public async Task CreateAsync(StudentsClass student)
-        //{
-        //    _context.studentsClasses.Add(student);
-        //    await _context.SaveChangesAsync();
-        //}
 
         public async Task UpdateAsync(StudentsClass student)
         {
@@ -56,11 +46,8 @@ namespace ProjectMMVC.Services
         }
 
         public bool Exists(int id)
-            => _context.studentsClasses.Any(e => e.Id == id);
-
-        public Task CreateAscync(StudentsClass student)
         {
-            throw new NotImplementedException();
+            return _context.studentsClasses.Any(e => e.Id == id);
         }
     }
 }

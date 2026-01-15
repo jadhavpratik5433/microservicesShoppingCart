@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectMMVC.Models;
 using ProjectMMVC.Services;
@@ -6,6 +7,7 @@ using ProjectMMVC.Services;
 
 namespace ProjectMMVC.Controllers
 {
+    
     public class StudentsClassController : Controller
     {
         private readonly IStudent _studentsService;
@@ -20,9 +22,9 @@ namespace ProjectMMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var students = await _studentsService.GetAllAsync();
-            return View(students);
+            // Use explicit path if MVC can't find the view
+            return View("~/Views/StudentsClass/Create.cshtml", students);
         }
-
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {

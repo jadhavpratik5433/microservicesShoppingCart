@@ -4,6 +4,6 @@ namespace ProjectMMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public virtual StudentsClass Student { get; set; }
+        public StudentsClass Student { get; set; }
     }
 }
