@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/WebProject/">
+    <Project Path="ApiWeb.Project/ApiWeb.Project.csproj" />
+  </Folder>
+</Solution>
